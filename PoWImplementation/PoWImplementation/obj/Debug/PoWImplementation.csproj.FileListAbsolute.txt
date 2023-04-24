@@ -1,0 +1,8 @@
+C:\Users\2018490157\Documents\SCHOOL FILES\SEMESTER 1\CSIS6809(HON PROJ)\ASSIGNMENTS\HONOURS PROJECT\PoWImplementation\PoWImplementation\bin\Debug\PoWImplementation.exe.config
+C:\Users\2018490157\Documents\SCHOOL FILES\SEMESTER 1\CSIS6809(HON PROJ)\ASSIGNMENTS\HONOURS PROJECT\PoWImplementation\PoWImplementation\bin\Debug\PoWImplementation.exe
+C:\Users\2018490157\Documents\SCHOOL FILES\SEMESTER 1\CSIS6809(HON PROJ)\ASSIGNMENTS\HONOURS PROJECT\PoWImplementation\PoWImplementation\bin\Debug\PoWImplementation.pdb
+C:\Users\2018490157\Documents\SCHOOL FILES\SEMESTER 1\CSIS6809(HON PROJ)\ASSIGNMENTS\HONOURS PROJECT\PoWImplementation\PoWImplementation\obj\Debug\PoWImplementation.csproj.AssemblyReference.cache
+C:\Users\2018490157\Documents\SCHOOL FILES\SEMESTER 1\CSIS6809(HON PROJ)\ASSIGNMENTS\HONOURS PROJECT\PoWImplementation\PoWImplementation\obj\Debug\PoWImplementation.csproj.SuggestedBindingRedirects.cache
+C:\Users\2018490157\Documents\SCHOOL FILES\SEMESTER 1\CSIS6809(HON PROJ)\ASSIGNMENTS\HONOURS PROJECT\PoWImplementation\PoWImplementation\obj\Debug\PoWImplementation.csproj.CoreCompileInputs.cache
+C:\Users\2018490157\Documents\SCHOOL FILES\SEMESTER 1\CSIS6809(HON PROJ)\ASSIGNMENTS\HONOURS PROJECT\PoWImplementation\PoWImplementation\obj\Debug\PoWImplementation.exe
+C:\Users\2018490157\Documents\SCHOOL FILES\SEMESTER 1\CSIS6809(HON PROJ)\ASSIGNMENTS\HONOURS PROJECT\PoWImplementation\PoWImplementation\obj\Debug\PoWImplementation.pdb
