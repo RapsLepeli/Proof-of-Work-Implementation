@@ -13,16 +13,16 @@ namespace PoWImplementation
         static void Main(string[] args)
         {
             
-            CreateChain();
+           // CreateChain();
 
-            Console.WriteLine(isChainValid());
-
+           // Console.WriteLine(isChainValid());
 
 
 
             Console.Write("\nPress any key to exit...");
             Console.ReadKey();
         }
+
         public static void CreateChain()
         {
             blockChain = new List<Block>();
@@ -65,6 +65,7 @@ namespace PoWImplementation
     {
         public string hash { get; set; }
         public string prevHash { get; set; }
+        
         private string sdata;
         public string data
         {
@@ -79,6 +80,11 @@ namespace PoWImplementation
         }
         private string timeStamp;
 
+        /// 
+        private int nonce;
+        /// 
+  
+
         public Block(string data, string prevHash) 
         {
             this.data= data;
@@ -92,7 +98,8 @@ namespace PoWImplementation
             using (SHA256 sha256Hash = SHA256.Create())
             {
                 string sHash = "";
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(prevHash + timeStamp));
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(prevHash + timeStamp));// add nonce after test
+
                 for (int i = 0; i < bytes.Length; i++)
                 {
                     sHash += bytes[i].ToString("x2");
