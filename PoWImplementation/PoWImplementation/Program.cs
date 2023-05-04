@@ -10,10 +10,13 @@ namespace PoWImplementation
     internal class Program
     {
         static List<Block> blockChain;
+
         static void Main(string[] args)
         {
             
-           // CreateChain();
+            CreateChain();
+
+            doesBlockExist();
 
            // Console.WriteLine(isChainValid());
 
@@ -25,14 +28,37 @@ namespace PoWImplementation
 
         public static void CreateChain()
         {
+            //create a class fro blockchain
             blockChain = new List<Block>();
 
-            blockChain.Add(new Block("Genesis Block", "0"));
-            blockChain.Add(new Block("Second Block", blockChain[blockChain.Count - 1].hash));
-            blockChain.Add(new Block("Third Block", blockChain[blockChain.Count - 1].hash));
-            blockChain.Add(new Block("Fourth Block", blockChain[blockChain.Count - 1].hash));
-            blockChain.Add(new Block("Fifth Block", blockChain[blockChain.Count - 1].hash));
+            blockChain.Add(new Block(new List<Transaction>() { new Transaction(1,"First Transaction in genesis block"), new Transaction(3, "third Transaction in genesis") }, "0"));
+            Console.WriteLine(blockChain[0]);
 
+            blockChain.Add(new Block(new List<Transaction>() { new Transaction(1, "First Transaction in block2 block"), new Transaction(2, "Second Transaction in block2") }, blockChain[blockChain.Count -1].hash));
+            Console.WriteLine(blockChain[1]);
+
+            blockChain.Add(new Block(new List<Transaction>() { new Transaction(5, "Firfth Transaction in block3 block"), new Transaction(6, "Sixth Transaction in block3") }, blockChain[blockChain.Count - 1].hash));
+            Console.WriteLine(blockChain[2]);
+
+        }
+        public static void doesBlockExist()
+        {
+            Console.Write("Input hash to check: ");
+            string blockhash = Console.ReadLine();
+
+            Block currentBlock = blockChain.FirstOrDefault(b => b.hash == blockhash);
+
+            if (currentBlock != null)
+            {
+                Console.WriteLine("Block Exists....");
+
+            }
+            else
+            {
+                Console.WriteLine("Block Does not exist");
+            }
+           
+            
         }
         public static bool isChainValid()
         {
@@ -61,52 +87,4 @@ namespace PoWImplementation
         }
     }
 
-    public class Block
-    {
-        public string hash { get; set; }
-        public string prevHash { get; set; }
-        
-        private string sdata;
-        public string data
-        {
-            get
-            {
-                return sdata;
-            }
-            set
-            {
-                sdata = value;
-            }
-        }
-        private string timeStamp;
-
-        /// 
-        private int nonce;
-        /// 
-  
-
-        public Block(string data, string prevHash) 
-        {
-            this.data= data;
-            this.prevHash = prevHash;
-            timeStamp = DateTime.UtcNow.TimeOfDay.ToString();
-            this.hash = calculateHash();
-          
-        }
-        public string calculateHash()
-        {
-            using (SHA256 sha256Hash = SHA256.Create())
-            {
-                string sHash = "";
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(prevHash + timeStamp));// add nonce after test
-
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    sHash += bytes[i].ToString("x2");
-                }
-                return sHash;
-            }
-
-        }
-    }
 }
