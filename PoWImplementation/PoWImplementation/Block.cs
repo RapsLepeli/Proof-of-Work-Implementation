@@ -47,7 +47,7 @@ namespace PoWImplementation
                 Console.WriteLine("Invalid hash: hash needed starts with " + poWDiffictlty + " zero's :" +  hash);
             }
             Console.WriteLine("Block with hash={0} successfully mined!!!",hash);
-
+            
         }
 
         public string calculateHash()

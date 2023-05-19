@@ -41,7 +41,7 @@ namespace PoWImplementation
         {
             
             List<Transaction> transactions = new List<Transaction>();
-            transactions.Add(new Transaction(0, "", ""));
+            transactions.Add(new Transaction(0, "Genesis", "Genesis"));
             return new Block("0", transactions); 
         }
         
@@ -67,7 +67,9 @@ namespace PoWImplementation
 
             //add block after mined
             chain.Add(blockToBeAdded);
-           
+
+            //
+            _pendingTransactions = new List<Transaction>();
             }
         public void CreateTransaction(Transaction transaction)
         {
@@ -131,6 +133,15 @@ namespace PoWImplementation
                 Console.WriteLine("------ End Block ------");
             }
             Console.WriteLine("----------------- End Blockchain -----------------");
+
+            chain[1].transactions = new List<Transaction>
+            {
+             new Transaction(150,"Fake Sender","Fake reciever")
+            };
+
+            Console.WriteLine();
+            Console.WriteLine("Hacking the blockchain...");
+            Console.WriteLine("Is valid: {0}", this.IsChainValid());
         }
     }
     
