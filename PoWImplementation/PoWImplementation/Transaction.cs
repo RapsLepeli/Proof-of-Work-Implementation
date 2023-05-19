@@ -12,16 +12,16 @@ namespace PoWImplementation
         //dummy data
 
         //To be added
-        public int amount { get; set; }
-        public string payer { get; set; }//PublicKey
-        public string payee { get; set; }//PublicKey
+        public decimal amount { get; }
+        public string payer { get; }//PublicKey{from}
+        public string payee { get; }//PublicKey{to}
 
 
-        public Transaction(int _amount, string _payer, string _payee)
+        public Transaction(decimal amount, string payer, string payee)
         {
-            amount = _amount;
-            payer = _payer;
-            payee = _payee;
+            this.amount = amount;
+            this.payer = payer;
+            this.payee = payee;
         }
         public override string ToString()
         {

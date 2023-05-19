@@ -9,18 +9,12 @@ namespace PoWImplementation
 {
     internal class Program
     {
-        static List<Block> blockChain;
+        static Chain blockChain = Chain.Instance;
 
         static void Main(string[] args)
         {
-            
+
             CreateChain();
-
-            doesBlockExist();
-
-           // Console.WriteLine(isChainValid());
-
-
 
             Console.Write("\nPress any key to exit...");
             Console.ReadKey();
@@ -28,63 +22,92 @@ namespace PoWImplementation
 
         public static void CreateChain()
         {
-            //create a class fro blockchain
-            blockChain = new List<Block>();
 
-            blockChain.Add(new Block(new List<Transaction>() { new Transaction(1,"First Transaction in genesis block"), new Transaction(3, "third Transaction in genesis") }, "0"));
-            Console.WriteLine(blockChain[0]);
+            string MinerAddress = "Miner 1";
+            string user1 = "Raps";
+            string user2 = "Joe";
 
-            blockChain.Add(new Block(new List<Transaction>() { new Transaction(1, "First Transaction in block2 block"), new Transaction(2, "Second Transaction in block2") }, blockChain[blockChain.Count -1].hash));
-            Console.WriteLine(blockChain[1]);
+            Transaction transaction1 = new Transaction(10, user1, user2);
+            blockChain.CreateTransaction(transaction1);
 
-            blockChain.Add(new Block(new List<Transaction>() { new Transaction(5, "Firfth Transaction in block3 block"), new Transaction(6, "Sixth Transaction in block3") }, blockChain[blockChain.Count - 1].hash));
-            Console.WriteLine(blockChain[2]);
+            Transaction transaction2 = new Transaction(200, user2, user1);
+            blockChain.CreateTransaction(transaction2);
 
-        }
-        public static void doesBlockExist()
-        {
-            Console.Write("Input hash to check: ");
-            string blockhash = Console.ReadLine();
+            Transaction transaction3 = new Transaction(10, user2, user1);
+            blockChain.CreateTransaction(transaction3);
 
-            Block currentBlock = blockChain.FirstOrDefault(b => b.hash == blockhash);
+            Console.WriteLine("is the chain valid: " + blockChain.IsChainValid());
 
-            if (currentBlock != null)
-            {
-                Console.WriteLine("Block Exists....");
+            //
+            int difficulty = 4;
 
-            }
-            else
-            {
-                Console.WriteLine("Block Does not exist");
-            }
+
+            Console.WriteLine();
+            Console.WriteLine("----------------- Start Blockchain -----------------");
+
+            blockChain.MineBlock(difficulty, MinerAddress);
+
+            Console.WriteLine("Balance of the miner: " + blockChain.GetBalance(MinerAddress));
+
+            Transaction transaction4 = new Transaction(5, user1, user2);
+            blockChain.CreateTransaction(transaction4);
+
+
+            Console.WriteLine();
+            Console.WriteLine("--------- Start mining ---------");
+            blockChain.MineBlock(difficulty, MinerAddress);
+
+            Console.WriteLine("Balance of the miner: " + blockChain.GetBalance(MinerAddress));
+            Console.WriteLine();
            
-            
+            blockChain.PrintChain();
         }
-        public static bool isChainValid()
-        {
-            Block currentBlock;
-            Block prevBlock;
 
-            for (int i = 1; i < blockChain.Count; i++)
-            {
-                currentBlock = blockChain[i];
-                prevBlock = blockChain[i-1];
+        //public static void doesBlockExist()
+        //{
+        //    Console.Write("Input hash to check: ");
+        //    string blockhash = Console.ReadLine();
 
-                if (!currentBlock.hash.Equals(currentBlock.calculateHash()))
-                {
-                    Console.WriteLine("Hashes are not equal");
-                    return false;
-                }
+        //    Block currentBlock = blockChain.FirstOrDefault(b => b.hash == blockhash);
 
-                if (!prevBlock.hash.Equals(currentBlock.prevHash))
-                {
-                    Console.WriteLine("Previous block hashes are not equal");
-                    return false;
-                }
+        //    if (currentBlock != null)
+        //    {
+        //        Console.WriteLine("Block Exists....");
 
-            }
-            return true;
-        }
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("Block Does not exist");
+        //    }
+
+
+        //}
+
+        //public static bool isChainValid()
+        //{
+        //    Block currentBlock;
+        //    Block prevBlock;
+
+        //    for (int i = 1; i < blockChain.Count; i++)
+        //    {
+        //        currentBlock = blockChain[i];
+        //        prevBlock = blockChain[i-1];
+
+        //        if (!currentBlock.hash.Equals(currentBlock.calculateHash()))
+        //        {
+        //            Console.WriteLine("Hashes are not equal");
+        //            return false;
+        //        }
+
+        //        if (!prevBlock.hash.Equals(currentBlock.prevHash))
+        //        {
+        //            Console.WriteLine("Previous block hashes are not equal");
+        //            return false;
+        //        }
+
+        //    }
+        //    return true;
+        //}
     }
 
 }
