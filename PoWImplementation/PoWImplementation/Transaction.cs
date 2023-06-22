@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace PoWImplementation
 {
+
     public class Transaction
     {
         //should have its own has

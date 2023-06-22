@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace PoWImplementation
 {
+
     public class Block
     {
         //hash of current block

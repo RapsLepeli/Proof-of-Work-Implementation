@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace PoWImplementation
 {
+
     public sealed class Chain
     {
         //simplest / change if needs be
