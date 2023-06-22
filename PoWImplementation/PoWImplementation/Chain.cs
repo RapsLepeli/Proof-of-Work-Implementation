@@ -98,6 +98,7 @@ namespace PoWImplementation
             return balance;
         }
 
+
         public bool IsChainValid()
         {
             for (int i = 1; i < chain.Count; i++)

@@ -37,4 +37,10 @@ namespace PoWImplementation
         }
         
     }
+    public  class Miner
+    {
+         public string Adress { get; set; }
+         public decimal amount { get; set; }
+
+    }
 }

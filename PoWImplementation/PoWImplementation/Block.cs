@@ -18,6 +18,7 @@ namespace PoWImplementation
         private string timeStamp;
         //list of transactions
         public List<Transaction> transactions { get; set; }
+      
 
         /// 
         public int nonce;
