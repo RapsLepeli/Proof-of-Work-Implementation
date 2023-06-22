@@ -31,7 +31,7 @@ namespace PoWImplementation
 
         }
 
-        //Mine Block(Testing the blockchain if it works forst)
+        //Mine Block(Testing the blockchain if it works first)
 
         public void MineBlock(int poWDiffictlty)
         {

@@ -39,7 +39,7 @@ namespace PoWImplementation
             Console.WriteLine("is the chain valid: " + blockChain.IsChainValid());
 
             //
-            int difficulty = 4;
+            int difficulty = 1;
 
 
             Console.WriteLine();

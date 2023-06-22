@@ -47,7 +47,7 @@ Make sure to strike through each link after it has been used :fire:.
 A distributed blockchain data structure. The blockchain data structure can be defined as an ordered, back-linked list of blocks containing transactions. It can be stored in a simple database or as a file. A hash-generated cryptographic hash technique on the block header identifies each block. For example, in the "prior block hash" field of the block header, each block refers to a preceding block called the parent block . This ledger will be used to record all transactions in this system. The figure below shows what a general blockchain data structure looks like ![Basic Structure](/assets/Structureofblocksinblockchain.png)
 
 Resources that will be used as references are listed below<br>
-~~- [Geeks for Geeks Java Implementation](https://www.geeksforgeeks.org/implementation-of-blockchain-in-java/?ref=rp)~~
+~~- [Geeks for Geeks Java Implementation](https://www.geeksforgeeks.org/implementation-of-blockchain-in-java/?ref=rp)~~<br>
 ~~- [Write your Own Proof-of-Work Blockchain](https://www.jmeiners.com/tiny-blockchain/)~~
 - [Blockchain and Proof of Work](https://marceloh-web.medium.com/blockchain-and-proof-of-work-f35ffc33c459)
 - [Building a Blockchain in Under 15 Minutes - Programmer explains](https://www.youtube.com/watch?v=baJYhYsHkLM)
