@@ -13,6 +13,9 @@ namespace PoWImplementation
 
         static void Main(string[] args)
         {
+           // Wallet wallet = new Wallet();
+           // Console.Write("Pub: " + wallet.PublicKey + "\nPriv: " + wallet.PrivateKey);
+
 
             CreateChain();
 

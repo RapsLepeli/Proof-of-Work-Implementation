@@ -16,6 +16,7 @@ namespace PoWImplementation
         public decimal amount { get; }
         public string payer { get; }//PublicKey{from}
         public string payee { get; }//PublicKey{to}
+        private string timeStamp;
 
 
         public Transaction(decimal amount, string payer, string payee)
@@ -23,10 +24,11 @@ namespace PoWImplementation
             this.amount = amount;
             this.payer = payer;
             this.payee = payee;
+            timeStamp = DateTime.UtcNow.TimeOfDay.ToString();
         }
         public override string ToString()
         {
-            return "Transaction Amount: " + amount + "\nPayer Public Key: " + payer + "\nPayee Public Key: " + payee;
+            return "Transaction Amount: " + amount + "\nPayer Public Key: " + payer + "\nPayee Public Key: " + payee + "\nTime Stamp: " + timeStamp;
         }
     }
 }

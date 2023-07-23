@@ -10,6 +10,7 @@ namespace PoWImplementation
 
     public class Block
     {
+        public int Index { get; set; }
         //hash of current block
         public string hash { get; set; }
         //hash of prev block
@@ -26,6 +27,7 @@ namespace PoWImplementation
 
         public Block(string prevHash, List<Transaction> transactions)
         {
+            Index = 0;
             this.transactions = transactions;
             this.prevHash = prevHash;
             timeStamp = DateTime.UtcNow.TimeOfDay.ToString();
@@ -51,7 +53,7 @@ namespace PoWImplementation
             Console.WriteLine("Block with hash={0} successfully mined!!!",hash);
             
         }
-
+        //get block hash
         public string calculateHash()
         {
             //using the sha256 hash algo
@@ -70,13 +72,6 @@ namespace PoWImplementation
             }
 
         }
-        //public override string ToString()
-        //{
-        //    string BlockOutput = "";
 
-        //    BlockOutput += "Previous Hash: " + prevHash + "\nBlock Hash: " + hash + "\n";
-
-        //    return BlockOutput ;
-        //}
     }
 }
