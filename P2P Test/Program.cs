@@ -58,8 +58,7 @@ namespace P2P_Test
 
                     listner.Listen(10);
 
-                    while (true)
-                    {
+                  
                         Console.WriteLine("Waiting Connection...");
 
                         clientSocket = listner.Accept();
@@ -87,7 +86,7 @@ namespace P2P_Test
 
                         clientSocket.Shutdown(SocketShutdown.Both);
                         clientSocket.Close();
-                    }
+                    
                 }
                 catch (Exception e)
                 {
