@@ -19,49 +19,50 @@ namespace PoW
         static int listenPort = 49999;
         static int sendPort = 0;
         static string lastMessage = "";
+        static string[] pendingMessagesForSession;
 
 
-        static void Main()
-        {
-            Thread listenerThread = null;
+        //static void Main()
+        //{
+        //    Thread listenerThread = null;
 
-            listenPort = listenPort+ 1;
-            sendPort = listenPort +1;
-            Console.Write("Enter Wallet Name: ");
-            name = Console.ReadLine();
+        //    listenPort = listenPort+ 1;
+        //    sendPort = listenPort +1;
+        //    Console.Write("Enter Wallet Name: ");
+        //    name = Console.ReadLine();
 
-            Console.WriteLine(name+ " is listening on port: " + listenPort + "and sending messaages to port "+ sendPort);
-
-
-            Console.WriteLine("Loading, This might take a few seconds...\n");
-
-            string listeningOnPortsString = listenPort.ToString();
-
-            listenerThread = new Thread(() => ListenForMessages(listenPort));
-            listenerThread.Start();
+        //    Console.WriteLine(name+ " is listening on port: " + listenPort + "and sending messaages to port "+ sendPort);
 
 
-            while (true)
-            {
-                Console.Write(name + " sending on port: " + sendPort.ToString() + ">> Enter a message or exit to stop the session: ");
-                string message = Console.ReadLine();
+        //    Console.WriteLine("Loading, This might take a few seconds...\n");
 
-                if (message == "exit")
-                {
-                    stopListeningEvent.Set();
-                    break;
-                }
+        //    string listeningOnPortsString = listenPort.ToString();
+
+        //    listenerThread = new Thread(() => ListenForMessages(listenPort));
+        //    listenerThread.Start();
 
 
-                // Broadcast the message to all clients
-                SendMessage(name + ": " + message, IPAddress.Loopback, sendPort);
-                lastMessage = message;
-            }
+        //    while (true)
+        //    {
+        //        Console.Write(name + " sending on port: " + sendPort.ToString() + ">> Enter a message or exit to stop the session: ");
+        //        string message = Console.ReadLine();
+
+        //        if (message == "exit")
+        //        {
+        //            stopListeningEvent.Set();
+        //            break;
+        //        }
 
 
-            Console.WriteLine("\n\tPress any key to exit...");
-            Console.ReadKey();
-        }
+        //        // Broadcast the message to all clients
+        //        SendMessage(name + ": " + message, IPAddress.Loopback, sendPort);
+        //        lastMessage = message;
+        //    }
+
+
+        //    Console.WriteLine("\n\tPress any key to exit...");
+        //    Console.ReadKey();
+        //}
 
         static ManualResetEvent stopListeningEvent = new ManualResetEvent(false);
 
@@ -146,55 +147,55 @@ namespace PoW
         }
 
         //Origional Main
-        //static void Main(string[] args)
-        //{
-           
-        //    Chain BlockChain = Chain.Instance;
+        static void Main(string[] args)
+        {
 
-        //     Console.WriteLine("-----------------Blockchain: Proof of Work Implementation -----------------");
+            Chain BlockChain = Chain.Instance;
 
-        //    Block1TestData();
+            Console.WriteLine("-----------------Blockchain: Proof of Work Implementation -----------------");
+
+            Block1TestData();
 
 
-        //    Console.Write("\n\tStart New Session(Y/N):>");
-        //    char Opt = char.Parse(Console.ReadLine().ToUpper());
-        //    if (Opt == 'Y')
-        //    {
-        //        Block2TestData();
+            Console.Write("\n\tStart New Session(Y/N):>");
+            char Opt = char.Parse(Console.ReadLine().ToUpper());
+            if (Opt == 'Y')
+            {
+                Block2TestData();
 
-        //        Console.Write("\n\tDisplay BlockChain Contents(Y/N):>");
-        //        Opt = char.Parse(Console.ReadLine().ToUpper());
-        //        if (Opt == 'Y')
-        //        {
-        //            //Display
-        //            DisplayBlockChainContents(BlockChain);
-        //        }
-        //    }
-        //    else if (Opt == 'N')
-        //    {
-        //        Console.Write("\n\tDisplay BlockChain Contents(Y/N):>");
-        //        Opt = char.Parse(Console.ReadLine().ToUpper());
-        //        if (Opt == 'Y')
-        //        {
-        //            //Display
-        //            DisplayBlockChainContents(BlockChain);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("\tInvalid Input...");
-        //        Console.Write("\n\tDisplay BlockChain Contents(Y/N):>");
-        //        Opt = char.Parse(Console.ReadLine().ToUpper());
-        //        if (Opt == 'Y')
-        //        {
-        //            //Display
-        //            DisplayBlockChainContents(BlockChain);
-        //        }
-        //    }
+                Console.Write("\n\tDisplay BlockChain Contents(Y/N):>");
+                Opt = char.Parse(Console.ReadLine().ToUpper());
+                if (Opt == 'Y')
+                {
+                    //Display
+                    DisplayBlockChainContents(BlockChain);
+                }
+            }
+            else if (Opt == 'N')
+            {
+                Console.Write("\n\tDisplay BlockChain Contents(Y/N):>");
+                Opt = char.Parse(Console.ReadLine().ToUpper());
+                if (Opt == 'Y')
+                {
+                    //Display
+                    DisplayBlockChainContents(BlockChain);
+                }
+            }
+            else
+            {
+                Console.WriteLine("\tInvalid Input...");
+                Console.Write("\n\tDisplay BlockChain Contents(Y/N):>");
+                Opt = char.Parse(Console.ReadLine().ToUpper());
+                if (Opt == 'Y')
+                {
+                    //Display
+                    DisplayBlockChainContents(BlockChain);
+                }
+            }
 
-        //    Console.WriteLine("\n\tPress any key to exit...");
-        //    Console.ReadKey();
-        //}
+            Console.WriteLine("\n\tPress any key to exit...");
+            Console.ReadKey();
+        }
         static void Block1TestData()
         {
             //Create Dummy Transactions
