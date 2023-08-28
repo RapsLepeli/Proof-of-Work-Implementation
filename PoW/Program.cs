@@ -22,6 +22,59 @@ namespace PoW
         static string[] pendingMessagesForSession;
 
 
+
+        static void WalletUi()
+        {
+            Console.WriteLine("-----------------Blockchain: Proof of Work Implementation -----------------");
+
+            Thread listenerThread = null;
+
+            listenPort = listenPort + 1;
+            sendPort = listenPort + 1;
+
+            Console.Write("Enter Wallet Name: ");
+            name = Console.ReadLine();
+
+           Console.WriteLine("App Uses ports and Sockets: " + name +" sends messages to " + sendPort +" and lsitens on port "+ listenPort);
+
+           Console.WriteLine("Loading, This might take a few seconds...\n");
+
+           string listeningOnPortsString = listenPort.ToString();
+
+            listenerThread = new Thread(() => ListenForMessages(listenPort));
+            listenerThread.Start();
+
+
+            Block1TestData();
+
+            while (true)
+            {
+                Console.Write(name + " sending on port: " + sendPort.ToString() + ">> Alert other clients: block mined(y/n): ");
+                string message = Console.ReadLine();
+
+                if (message == "n")
+                {
+                    stopListeningEvent.Set();
+                    break;
+                }
+
+                // Broadcast the message to all clients
+                SendMessage(name + ": " + message, IPAddress.Loopback, sendPort);
+                lastMessage = message;
+            }
+
+        }
+
+        static void Main()
+        {
+            WalletUi();
+
+
+            Console.WriteLine("\n\tPress any key to exit...");
+            Console.ReadKey();
+        }
+
+
         //static void Main()
         //{
         //    Thread listenerThread = null;
@@ -146,61 +199,61 @@ namespace PoW
             }
         }
 
-        //Origional Main
-        static void Main(string[] args)
-        {
+        ////Origional Main
+        //static void Main(string[] args)
+        //{
 
-            Chain BlockChain = Chain.Instance;
+        //    Chain BlockChain = Chain.Instance;
 
-            Console.WriteLine("-----------------Blockchain: Proof of Work Implementation -----------------");
+        //    Console.WriteLine("-----------------Blockchain: Proof of Work Implementation -----------------");
 
-            Block1TestData();
+        //    Block1TestData();
 
 
-            Console.Write("\n\tStart New Session(Y/N):>");
-            char Opt = char.Parse(Console.ReadLine().ToUpper());
-            if (Opt == 'Y')
-            {
-                Block2TestData();
+        //    Console.Write("\n\tStart New Session(Y/N):>");
+        //    char Opt = char.Parse(Console.ReadLine().ToUpper());
+        //    if (Opt == 'Y')
+        //    {
+        //        Block2TestData();
 
-                Console.Write("\n\tDisplay BlockChain Contents(Y/N):>");
-                Opt = char.Parse(Console.ReadLine().ToUpper());
-                if (Opt == 'Y')
-                {
-                    //Display
-                    DisplayBlockChainContents(BlockChain);
-                }
-            }
-            else if (Opt == 'N')
-            {
-                Console.Write("\n\tDisplay BlockChain Contents(Y/N):>");
-                Opt = char.Parse(Console.ReadLine().ToUpper());
-                if (Opt == 'Y')
-                {
-                    //Display
-                    DisplayBlockChainContents(BlockChain);
-                }
-            }
-            else
-            {
-                Console.WriteLine("\tInvalid Input...");
-                Console.Write("\n\tDisplay BlockChain Contents(Y/N):>");
-                Opt = char.Parse(Console.ReadLine().ToUpper());
-                if (Opt == 'Y')
-                {
-                    //Display
-                    DisplayBlockChainContents(BlockChain);
-                }
-            }
+        //        Console.Write("\n\tDisplay BlockChain Contents(Y/N):>");
+        //        Opt = char.Parse(Console.ReadLine().ToUpper());
+        //        if (Opt == 'Y')
+        //        {
+        //            //Display
+        //            DisplayBlockChainContents(BlockChain);
+        //        }
+        //    }
+        //    else if (Opt == 'N')
+        //    {
+        //        Console.Write("\n\tDisplay BlockChain Contents(Y/N):>");
+        //        Opt = char.Parse(Console.ReadLine().ToUpper());
+        //        if (Opt == 'Y')
+        //        {
+        //            //Display
+        //            DisplayBlockChainContents(BlockChain);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("\tInvalid Input...");
+        //        Console.Write("\n\tDisplay BlockChain Contents(Y/N):>");
+        //        Opt = char.Parse(Console.ReadLine().ToUpper());
+        //        if (Opt == 'Y')
+        //        {
+        //            //Display
+        //            DisplayBlockChainContents(BlockChain);
+        //        }
+        //    }
 
-            Console.WriteLine("\n\tPress any key to exit...");
-            Console.ReadKey();
-        }
+        //    Console.WriteLine("\n\tPress any key to exit...");
+        //    Console.ReadKey();
+        //}
         static void Block1TestData()
         {
             //Create Dummy Transactions
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("\n\t----------------- Session 1 Start-----------------\n");
+            Console.WriteLine("\n\t----------------- Session 1 Start(p2pTest-> new p2p)-----------------\n");
 
 
             Console.ForegroundColor = ConsoleColor.Green;
