@@ -3,6 +3,7 @@ using System.Threading;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Collections.Generic;
 
 namespace PoW
 {
@@ -14,241 +15,225 @@ namespace PoW
         static Wallet User4 = new Wallet();
 
 
-        //Network test
-        static string name;
-        static int listenPort = 49999;
-        static int sendPort = 0;
-        static string lastMessage = "";
-        static string[] pendingMessagesForSession;
+        static IPHostEntry iPHost;
+        static IPAddress ipAddr;
+        static IPEndPoint localEndPoint;
+        static Socket serverSocket;
+        static List<Socket> clientSockets = new List<Socket>();
 
-
-
-        static void WalletUi()
-        {
-            Console.WriteLine("-----------------Blockchain: Proof of Work Implementation -----------------");
-
-            Thread listenerThread = null;
-
-            listenPort = listenPort + 1;
-            sendPort = listenPort + 1;
-
-            Console.Write("Enter Wallet Name: ");
-            name = Console.ReadLine();
-
-           Console.WriteLine("App Uses ports and Sockets: " + name +" sends messages to " + sendPort +" and lsitens on port "+ listenPort);
-
-           Console.WriteLine("Loading, This might take a few seconds...\n");
-
-           string listeningOnPortsString = listenPort.ToString();
-
-            listenerThread = new Thread(() => ListenForMessages(listenPort));
-            listenerThread.Start();
-
-
-            Block1TestData();
-
-            while (true)
-            {
-                Console.Write(name + " sending on port: " + sendPort.ToString() + ">> Alert other clients: block mined(y/n): ");
-                string message = Console.ReadLine();
-
-                if (message == "n")
-                {
-                    stopListeningEvent.Set();
-                    break;
-                }
-
-                // Broadcast the message to all clients
-                SendMessage(name + ": " + message, IPAddress.Loopback, sendPort);
-                lastMessage = message;
-            }
-
-        }
-
-        static void Main()
-        {
-            WalletUi();
-
-
-            Console.WriteLine("\n\tPress any key to exit...");
-            Console.ReadKey();
-        }
-
-
-        //static void Main()
-        //{
-        //    Thread listenerThread = null;
-
-        //    listenPort = listenPort+ 1;
-        //    sendPort = listenPort +1;
-        //    Console.Write("Enter Wallet Name: ");
-        //    name = Console.ReadLine();
-
-        //    Console.WriteLine(name+ " is listening on port: " + listenPort + "and sending messaages to port "+ sendPort);
-
-
-        //    Console.WriteLine("Loading, This might take a few seconds...\n");
-
-        //    string listeningOnPortsString = listenPort.ToString();
-
-        //    listenerThread = new Thread(() => ListenForMessages(listenPort));
-        //    listenerThread.Start();
-
-
-        //    while (true)
-        //    {
-        //        Console.Write(name + " sending on port: " + sendPort.ToString() + ">> Enter a message or exit to stop the session: ");
-        //        string message = Console.ReadLine();
-
-        //        if (message == "exit")
-        //        {
-        //            stopListeningEvent.Set();
-        //            break;
-        //        }
-
-
-        //        // Broadcast the message to all clients
-        //        SendMessage(name + ": " + message, IPAddress.Loopback, sendPort);
-        //        lastMessage = message;
-        //    }
-
-
-        //    Console.WriteLine("\n\tPress any key to exit...");
-        //    Console.ReadKey();
-        //}
-
-        static ManualResetEvent stopListeningEvent = new ManualResetEvent(false);
-
-        static void ListenForMessages(int port)
-        {
-            TcpListener listener = new TcpListener(IPAddress.Any, port);
-            listener.Start();
-
-            while (true)
-            {
-                TcpClient client = listener.AcceptTcpClient();
-                Thread handlerThread = new Thread(HandleClient);
-                handlerThread.Start(client);
-            }
-        }
-        static void SendMessage(string message, IPAddress ipAddress, int port)
-        {
-            if (message != "")
-            {
-                if (!IsPortAvailable(port))
-                {
-                    TcpClient client = new TcpClient();
-                    client.Connect(ipAddress, port);
-
-                    NetworkStream stream = client.GetStream();
-                    byte[] data = Encoding.UTF8.GetBytes(message);
-                    stream.Write(data, 0, data.Length);
-
-                    client.Close();
-                }
-                else
-                {
-                    //Console.WriteLine("Message not sent - No one listening");
-                    TcpClient client = new TcpClient();
-                    client.Connect(ipAddress, 50000);
-
-                    NetworkStream stream = client.GetStream();
-                    byte[] data = Encoding.UTF8.GetBytes(message);
-                    stream.Write(data, 0, data.Length);
-
-                    client.Close();
-                }
-            }
-        }
-
-
-        static void HandleClient(object clientObj)
-        {
-            TcpClient client = (TcpClient)clientObj;
-            NetworkStream stream = client.GetStream();
-
-            byte[] buffer = new byte[1024];
-            int bytesRead = stream.Read(buffer, 0, buffer.Length);
-            string message = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-
-            if (message != "")
-            {
-                Console.WriteLine("Message received: " + message + "\n\n");
-
-                if (listenPort != 50000)
-                    SendMessage(name + ": " + message, IPAddress.Loopback, sendPort);
-
-            }
-
-            client.Close();
-        }
-
-        static bool IsPortAvailable(int port)
-        {
-            try
-            {
-                using (var client = new TcpClient())
-                {
-                    client.Connect(IPAddress.Loopback, port);
-                    return false;
-                }
-            }
-            catch (SocketException)
-            {
-                return true;
-            }
-        }
-
-        ////Origional Main
         //static void Main(string[] args)
         //{
+        //    // Host IP Address
+        //    iPHost = Dns.GetHostEntry(Dns.GetHostName());
+        //    ipAddr = iPHost.AddressList[0];
+        //    Console.WriteLine("Host IP Address: " + ipAddr.ToString());
 
-        //    Chain BlockChain = Chain.Instance;
+        //    // Creating an endpoint (Host + Port)
+        //    localEndPoint = new IPEndPoint(ipAddr, 11111);
+        //    Console.WriteLine("Communication EndPoint: " + localEndPoint);
 
-        //    Console.WriteLine("-----------------Blockchain: Proof of Work Implementation -----------------");
+        //    Console.Write("\n1. System_Tester: \n2. Wallet:\nChoose (1/2): ");
+        //    int choice = int.Parse(Console.ReadLine());
 
-        //    Block1TestData();
-
-
-        //    Console.Write("\n\tStart New Session(Y/N):>");
-        //    char Opt = char.Parse(Console.ReadLine().ToUpper());
-        //    if (Opt == 'Y')
+        //    if (choice == 1)
         //    {
-        //        Block2TestData();
-
-        //        Console.Write("\n\tDisplay BlockChain Contents(Y/N):>");
-        //        Opt = char.Parse(Console.ReadLine().ToUpper());
-        //        if (Opt == 'Y')
-        //        {
-        //            //Display
-        //            DisplayBlockChainContents(BlockChain);
-        //        }
-        //    }
-        //    else if (Opt == 'N')
-        //    {
-        //        Console.Write("\n\tDisplay BlockChain Contents(Y/N):>");
-        //        Opt = char.Parse(Console.ReadLine().ToUpper());
-        //        if (Opt == 'Y')
-        //        {
-        //            //Display
-        //            DisplayBlockChainContents(BlockChain);
-        //        }
+        //        ExecuteServer();
         //    }
         //    else
         //    {
-        //        Console.WriteLine("\tInvalid Input...");
-        //        Console.Write("\n\tDisplay BlockChain Contents(Y/N):>");
-        //        Opt = char.Parse(Console.ReadLine().ToUpper());
-        //        if (Opt == 'Y')
-        //        {
-        //            //Display
-        //            DisplayBlockChainContents(BlockChain);
-        //        }
+        //        ExecuteClient();
         //    }
 
-        //    Console.WriteLine("\n\tPress any key to exit...");
+        //    Console.WriteLine("Press any key to exit....");
         //    Console.ReadKey();
         //}
+
+        static void ExecuteServer()
+        {
+            try
+            {
+                serverSocket = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                serverSocket.Bind(localEndPoint);
+                serverSocket.Listen(2);
+
+                Console.WriteLine("System Tester is waiting for connections from Wallets...");
+
+                while (true)
+                {
+                    Socket clientSocket = serverSocket.Accept();
+                    clientSockets.Add(clientSocket);
+
+                    Thread clientThread = new Thread(() => HandleClient(clientSocket));
+                    clientThread.Start();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        static void HandleClient(Socket clientSocket)
+        {
+            try
+            {
+                Console.WriteLine("Wallet connected: " + clientSocket.RemoteEndPoint.ToString());
+
+                while (true)
+                {
+                    byte[] bytes = new byte[1024];
+                    int numBytes = clientSocket.Receive(bytes);
+                    string data = Encoding.ASCII.GetString(bytes, 0, numBytes);
+
+                    Console.WriteLine("Received from client: " + data);
+
+                    // Broadcast the message to all connected clients except the sender
+                    foreach (var socket in clientSockets)
+                    {
+                        if (socket != clientSocket)
+                        {
+                            byte[] messageBytes = Encoding.ASCII.GetBytes(data);
+                            string Message = Encoding.Default.GetString(messageBytes);
+                            if (Message.Contains("joe"))
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                messageBytes = Encoding.Default.GetBytes(Message);
+                                socket.Send(messageBytes);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Client disconnected: " + clientSocket.RemoteEndPoint.ToString());
+                clientSockets.Remove(clientSocket);
+                clientSocket.Close();
+            }
+        }
+
+        static void ExecuteClient()
+        {
+            try
+            {
+                Socket clientSocket = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                clientSocket.Connect(localEndPoint);
+
+                Console.WriteLine("Connected to System: " + clientSocket.RemoteEndPoint.ToString());
+
+                Thread receiveThread = new Thread(() => ReceiveMessages(clientSocket));
+                receiveThread.Start();
+
+                while (true)
+                {
+                    Console.Write("Enter Message to Send: ");
+                    string messageToSend = Console.ReadLine();
+
+                    byte[] messageSent = Encoding.ASCII.GetBytes(messageToSend);
+                    clientSocket.Send(messageSent);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        static void ReceiveMessages(Socket clientSocket)
+        {
+            try
+            {
+                while (true)
+                {
+                    byte[] messageReceived = new byte[1024];
+                    int bytesRead = clientSocket.Receive(messageReceived);
+                    string receivedMessage = Encoding.ASCII.GetString(messageReceived, 0, bytesRead);
+                    Console.WriteLine("Message from System: " + receivedMessage);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Disconnected from System.");
+                clientSocket.Close();
+                Environment.Exit(0);
+            }
+        }
+    
+    //Origional Main
+         static void Main(string[] args)
+         {
+            Chain BlockChain = Chain.Instance;
+            Console.WriteLine("-----------------Blockchain: Proof of Work Implementation -----------------");
+
+            // Host IP Address
+            iPHost = Dns.GetHostEntry(Dns.GetHostName());
+            ipAddr = iPHost.AddressList[0];
+            Console.WriteLine("Host IP Address: " + ipAddr.ToString());
+
+            // Creating an endpoint (Host + Port)
+            localEndPoint = new IPEndPoint(ipAddr, 11111);
+            Console.WriteLine("Communication EndPoint: " + localEndPoint);
+
+            Console.Write("\n1. System_Tester: \n2. Wallet:\nChoose (1/2): ");
+            int choice = int.Parse(Console.ReadLine());
+
+            if (choice == 1)
+            {
+                ExecuteServer();
+            }
+            else
+            {
+                ExecuteClient();
+            }
+
+            Console.Write("\n\tNew Session Started");
+            Block1TestData();
+
+
+            Console.Write("\n\tStart New Session(Y/N):>");
+            char Opt = char.Parse(Console.ReadLine().ToUpper());
+            if (Opt == 'Y')
+            {
+                Block2TestData();
+
+                Console.Write("\n\tDisplay BlockChain Contents(Y/N):>");
+                Opt = char.Parse(Console.ReadLine().ToUpper());
+                if (Opt == 'Y')
+                {
+                    //Display
+                    DisplayBlockChainContents(BlockChain);
+                }
+            }
+            else if (Opt == 'N')
+            {
+                Console.Write("\n\tDisplay BlockChain Contents(Y/N):>");
+                Opt = char.Parse(Console.ReadLine().ToUpper());
+                if (Opt == 'Y')
+                {
+                    //Display
+                    DisplayBlockChainContents(BlockChain);
+                }
+            }
+            else
+            {
+                Console.WriteLine("\tInvalid Input...");
+                Console.Write("\n\tDisplay BlockChain Contents(Y/N):>");
+                Opt = char.Parse(Console.ReadLine().ToUpper());
+                if (Opt == 'Y')
+                {
+                    //Display
+                    DisplayBlockChainContents(BlockChain);
+                }
+            }
+
+
+            Console.WriteLine("\n\tPress any key to exit...");
+          Console.ReadKey();
+        }
+       
         static void Block1TestData()
         {
             //Create Dummy Transactions
@@ -416,7 +401,6 @@ namespace PoW
         }
 
 
-
         //Display
         static void DisplayBlockChainContents(Chain BlockChain)
         {
@@ -454,5 +438,6 @@ namespace PoW
             Console.WriteLine("\n\t----------------- End Blockchain -----------------------------\n");
 
         }
+    
     }
 }

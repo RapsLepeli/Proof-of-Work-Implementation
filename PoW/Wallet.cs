@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
@@ -98,14 +100,20 @@ namespace PoW
             string hashValidation = new string('0', poWDifficulty);
             string Message = "";
             Console.ForegroundColor = ConsoleColor.Red;
+            Stopwatch stopWatch = new Stopwatch();
+            
+            stopWatch.Start();
             while (blockToBeMined.Hash.Substring(0,poWDifficulty) != hashValidation)
             {
                 nonce++;
                 blockToBeMined.Hash = CalculateBlockHash(blockToBeMined);
                Console.WriteLine("\tInvalid hash: hash needed starts with " + poWDifficulty + " zero's :" + blockToBeMined.Hash+"");
             }
+            stopWatch.Stop();
+
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\n\tBlock with hash= "+ blockToBeMined.Hash + " successfully mined!!!");
+            Console.WriteLine("\n\tTime Elapsed to mine block: " + (stopWatch.ElapsedMilliseconds)/100 + "  seconds!!!");
             Console.ForegroundColor = ConsoleColor.White;
             return Message;       
         }
