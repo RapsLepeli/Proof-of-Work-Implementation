@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,6 +14,7 @@ namespace PoW
         public RSAParameters PayerPubKey { get; set; }
         public RSAParameters PayeePubKey { get; set; }
         private string TimeStamp;
+        Random random;
 
         public Transaction(decimal amount, RSAParameters payerPubKey, RSAParameters payeePubKey)
         {
@@ -20,7 +22,7 @@ namespace PoW
             PayerPubKey = payerPubKey;
             PayeePubKey = payeePubKey;
             TimeStamp = DateTime.UtcNow.ToString();
-
+            random = new Random();
 
         }
 
@@ -37,10 +39,25 @@ namespace PoW
                 return sHash.Substring(0,80);
             
         }
+        public string CalculatePubKey()
+        {
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                int randomiser = random.Next(100);
+                string sHash = "";
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes("transactions hash instead of the transactions themselves" + randomiser)); 
+                                                                                                                                                                        //preparing the hash and returning it
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    sHash += bytes[i].ToString("x2");
+                }
+                return sHash;
+            }
+        }
 
         public override string ToString()
         {
-            return "\tAmount: " + Amount + "\n\tPayer Public Key: " + DisplayPubKey(PayerPubKey.Modulus) + "\n\tPayee Public Key: " + DisplayPubKey(PayeePubKey.Modulus) + "\n\tTimeStamp: " + TimeStamp+"\n";
+            return "\tAmount: " + Amount + "\n\tPayer Public Key: " + CalculatePubKey() + "\n\tPayee Public Key: " + CalculatePubKey() + "\n\tTimeStamp: " + TimeStamp+"\n";
         }
 
     }

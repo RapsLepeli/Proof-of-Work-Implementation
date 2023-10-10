@@ -95,7 +95,7 @@ namespace PoW
                 return sHash;
             }
         }
-        public string MineBlock(Block blockToBeMined,int poWDifficulty)
+        public void MineBlock(Block blockToBeMined,int poWDifficulty)
         {
             string hashValidation = new string('0', poWDifficulty);
             string Message = "";
@@ -114,8 +114,9 @@ namespace PoW
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\n\tBlock with hash= "+ blockToBeMined.Hash + " successfully mined!!!");
             Console.WriteLine("\n\tTime Elapsed to mine block: " + (stopWatch.ElapsedMilliseconds)/ 1000 + " seconds!!!");
+            blockToBeMined.Index = (int)(stopWatch.ElapsedMilliseconds) / 1000;
             Console.ForegroundColor = ConsoleColor.White;
-            return Message;       
+     
         }
         public bool VerifyMinedBlock(Block blockToBeVerified)
         {

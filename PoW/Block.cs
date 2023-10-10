@@ -22,6 +22,7 @@ namespace PoW
             this.PrevHash = prevBlockHash;
             TimeStamp = DateTime.UtcNow.ToString();
             Hash = CalculateBlockHash();
+
         }
         public string CalculateBlockHash()
         {
@@ -39,7 +40,7 @@ namespace PoW
         }
         public override string ToString()
         {
-            return "\tHash: " + Hash + "\n\tPrev Hash: " + PrevHash + "\n\tTimeStamp: "+TimeStamp+"\n\t";
+            return "\tHash: " + Hash + "\n\tPrev Hash: " + PrevHash + "\n\tTimeStamp: "+TimeStamp+"\n\tMining Time: " + Index;
         }
     }
 }
