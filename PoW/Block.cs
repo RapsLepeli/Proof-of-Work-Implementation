@@ -40,7 +40,7 @@ namespace PoW
         }
         public override string ToString()
         {
-            return "\tHash: " + Hash + "\n\tPrev Hash: " + PrevHash + "\n\tTimeStamp: "+TimeStamp+"\n\tMining Time: " + Index;
+            return "\tHash: " + Hash + "\n\tPrev Hash: " + PrevHash + "\n\tTimeStamp: "+TimeStamp+"\n\tMining Time: " + Index + " Seconds.";
         }
     }
 }

@@ -9,6 +9,7 @@ using System.Collections;
 using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Messaging;
 using System.Security.Policy;
+using System.IO;
 
 namespace PoW
 {
@@ -146,11 +147,18 @@ namespace PoW
                         "\n\tmine <difficulty>: for mining block for current session " +
                         "\n\tsession 2: to start session  2" + 
                         "\n\tsession 3: to start session 3" +
+                        "\n\tsession 4/5: to start session 4/5" +
                         "\n\tdisplay: to display blockchain contents" +
+                        "\n\tsave: to save blockchain data to file" +
                         "\n\tquit: to quit the app");
 
                     Console.Write("\n\tEnter Command: ");
                     string messageToSend = Console.ReadLine();
+
+                    if (messageToSend == "save")
+                    {
+                        WriteDataToFile(BlockChain);
+                    }
 
                     foreach (var socket in clientSockets)
                     {
@@ -207,7 +215,6 @@ namespace PoW
                     else if (receivedMessage == "display")
                     {
                         DisplayBlockChainContents(BlockChain);
-                       
                     }
                     else if (receivedMessage == "session 2")
                     {
@@ -216,9 +223,9 @@ namespace PoW
                         //s2
                         SignS2Transactions();
                         //s2
-                        CreateAndMineBlockForS2(int.Parse("5"));
+                        CreateAndMineBlockForS2(int.Parse("3"));
 
-                        Console.WriteLine("\tSession 3 to start automatically(difficulty is set to 3): Input: <session 3> to start");
+                        Console.WriteLine("\tSession 3 to start automatically(difficulty is set to 4): Input: <session 3> to start");
                     }
                     else if (receivedMessage == "session 3")
                     {
@@ -227,7 +234,31 @@ namespace PoW
                         //s2
                         SignS3Transactions();
                         //s2
-                        CreateAndMineBlockForS3(int.Parse("1"));
+                        CreateAndMineBlockForS3(int.Parse("4"));
+                    }
+                    else if (receivedMessage == "session 4")
+                    {
+                        //s2
+                        CreateTransactionsS4();
+                        //s2
+                        SignS4Transactions();
+                        //s2
+                        CreateAndMineBlockForS4(int.Parse("2"));
+                        Console.WriteLine("\tSession 4 to start automatically(difficulty is set to 2): Input: <session 3> to start");
+                    }
+                    else if (receivedMessage == "session 5")
+                    {
+                        //s2
+                        CreateTransactionsS5();
+                        //s2
+                        SignS5Transactions();
+                        //s2
+                        CreateAndMineBlockForS5(int.Parse("6"));
+
+                        Console.WriteLine("\tSession 5 to start automatically(difficulty is set to 6): Input: <session 3> to start");
+                    }else if(receivedMessage == "save")
+                    {
+                        Console.Write("\n\tData saved to file successfuly ");
                     }
                     else
                     {
@@ -295,6 +326,11 @@ namespace PoW
                 {
                     Console.Write("Enter Message to Send: ");
                     string messageToSend = Console.ReadLine();
+
+                    if (messageToSend == "display")
+                    {
+                        DisplayBlockChainContents(BlockChain);
+                    }
                    
                     byte[] messageSent = Encoding.ASCII.GetBytes(messageToSend);
                     clientSocket.Send(messageSent);
@@ -431,8 +467,8 @@ namespace PoW
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("\n\tInfo!\n\t-----");
             bool ver = User1.VerifyMinedBlock(blockToBeAdded);
-            Console.WriteLine("\tIs Block Valid: " + ver);
-            Console.WriteLine("\tMined Block Added");
+            Console.WriteLine("\tBlock has not been verified. Only verified and added to the blockchain when quit option is selected");
+ 
             User1.AddMinedBlock(blockToBeAdded);
 
             Console.ForegroundColor = ConsoleColor.Blue;
@@ -461,7 +497,7 @@ namespace PoW
             Console.WriteLine("\n\tTransaction 2\n\tUser 4 Sends 22 Money to User 2");
             Transaction t2 = new Transaction(22, User4.PublicKey, User2.PublicKey);
             User4.SpendMoney(22); User2.ReceiveMoney(22);
-            Thread.Sleep(780);
+            Thread.Sleep(559);
 
             Console.WriteLine("\n\tTransaction 3\n\tUser 1 Sends 32 Money to User 2");
             Transaction t3 = new Transaction(32, User1.PublicKey
@@ -472,7 +508,7 @@ namespace PoW
             Console.WriteLine("\n\tTransaction 4\n\tUser 4 Sends 4 Money to User 3");
             Transaction t4 = new Transaction(4, User4.PublicKey, User3.PublicKey);
             User4.SpendMoney(4); User2.ReceiveMoney(4);
-            Thread.Sleep(780);
+            Thread.Sleep(234);
 
             Console.WriteLine("\tTransaction 5\n\tUser 3 Sends 32 Money to User 1");
             Transaction t5 = new Transaction(32, User3.PublicKey
@@ -551,8 +587,8 @@ namespace PoW
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("\n\tInfo!\n\t-----");
             bool ver = User1.VerifyMinedBlock(blockToBeAdded);
-            Console.WriteLine("\tIs Block Valid: " + ver);
-            Console.WriteLine("\tMined Block Added");
+            Console.WriteLine("\tBlock has not been verified. Only verified and added to the blockchain when quit option is selected");
+ 
             User1.AddMinedBlock(blockToBeAdded);
 
             Console.ForegroundColor = ConsoleColor.Blue;
@@ -642,8 +678,8 @@ namespace PoW
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("\n\tInfo!\n\t-----");
             bool ver = User1.VerifyMinedBlock(blockToBeAdded);
-            Console.WriteLine("\tIs Block Valid: " + ver);
-            Console.WriteLine("\tMined Block Added");
+            Console.WriteLine("\tBlock has not been verified. Only verified and added to the blockchain when quit option is selected");
+ 
             User1.AddMinedBlock(blockToBeAdded);
 
             Console.ForegroundColor = ConsoleColor.Blue;
@@ -654,17 +690,246 @@ namespace PoW
 
 
         }
+        static void CreateTransactionsS4()
+        {
+            //Create Dummy Transactions
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\n\t----------------- Transactions for Session 4-----------------\n");
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("\tTransaction 1\n\tUser 1 Sends 43 Money to User 2");
+            Transaction t1 = new Transaction(32, User1.PublicKey
+                , User2.PublicKey);
+            User3.SpendMoney(43); User1.ReceiveMoney(43);
+            Thread.Sleep(781);
+
+            Console.WriteLine("\n\tTransaction 2\n\tUser 2 Sends 2 Money to User 1");
+            Transaction t2 = new Transaction(22, User4.PublicKey, User2.PublicKey);
+            User2.SpendMoney(2); User1.ReceiveMoney(2);
+            Thread.Sleep(370);
+
+            Console.WriteLine("\n\tTransaction 3\n\tUser 4 Sends 245 Money to User 2");
+            Transaction t3 = new Transaction(32, User1.PublicKey
+                , User2.PublicKey);
+            User1.SpendMoney(245); User2.ReceiveMoney(245);
+            Thread.Sleep(580);
+
+            Console.WriteLine("\n\tTransaction 4\n\tUser 3 Sends 14 Money to User 4");
+            Transaction t4 = new Transaction(4, User4.PublicKey, User3.PublicKey);
+            User4.SpendMoney(14); User2.ReceiveMoney(14);
+            Thread.Sleep(800);
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\n\t----------------- Adding Transactions to session list -----------------\n");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+            sessionTransactions.Add(t1);
+            sessionTransactions.Add(t2);
+            sessionTransactions.Add(t3);
+            sessionTransactions.Add(t4);
+
+            User1.AddTransaction(t1);
+            User1.AddTransaction(t2);
+            User1.AddTransaction(t3);
+            User1.AddTransaction(t4);
+
+            foreach (var item in sessionTransactions)
+            {
+                Console.WriteLine(item.ToString());
+            }
+        }
+        static void SignS4Transactions()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\n\t----------------- Adding Transactions to session list -----------------\n");
+            //Sign Transactions
+            Console.ForegroundColor = ConsoleColor.Blue;
+            int counter = 0;
+            foreach (var transaction in sessionTransactions)
+            {
+                var sig = User1.SignTransaction(transaction, User1.PrivateKey);
+                counter++;
+                Console.WriteLine("\tSigniture for transaction " + counter + ": " + sig);
+                Thread.Sleep(780);
+            }
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        static void CreateAndMineBlockForS4(int difficulty)
+        {
+            Console.WriteLine("\tBlock Created for current/Pending session Transactions");
+            Block blockToBeAdded = User1.CreateBlock();
+
+            User1.MineBlock(blockToBeAdded, difficulty);
+
+
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("\n\tInfo!\n\t-----");
+            bool ver = User1.VerifyMinedBlock(blockToBeAdded);
+            Console.WriteLine("\tBlock has not been verified. Only verified and added to the blockchain when quit option is selected");
+ 
+            User1.AddMinedBlock(blockToBeAdded);
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("\n\t---------------------------------- Session 4 End---------------------------------------------------\n");
+            Console.ForegroundColor = ConsoleColor.White;
+
+            sessionTransactions.Clear();
+
+
+        }
+        static void CreateTransactionsS5()
+        {
+            //Create Dummy Transactions
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\n\t----------------- Transactions for Session 5-----------------\n");
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("\tTransaction 1\n\tUser 3 Sends 32 Money to User 1");
+            Transaction t1 = new Transaction(32, User3.PublicKey
+                , User1.PublicKey);
+            User3.SpendMoney(32); User1.ReceiveMoney(32);
+            Thread.Sleep(780);
+
+            Console.WriteLine("\n\tTransaction 2\n\tUser 4 Sends 22 Money to User 2");
+            Transaction t2 = new Transaction(22, User4.PublicKey, User2.PublicKey);
+            User4.SpendMoney(22); User2.ReceiveMoney(22);
+            Thread.Sleep(780);
+
+            Console.WriteLine("\n\tTransaction 3\n\tUser 1 Sends 32 Money to User 2");
+            Transaction t3 = new Transaction(32, User1.PublicKey
+                , User2.PublicKey);
+            User1.SpendMoney(32); User2.ReceiveMoney(32);
+            Thread.Sleep(780);
+
+            Console.WriteLine("\n\tTransaction 4\n\tUser 4 Sends 4 Money to User 3");
+            Transaction t4 = new Transaction(4, User4.PublicKey, User3.PublicKey);
+            User4.SpendMoney(4); User2.ReceiveMoney(4);
+            Thread.Sleep(780);
+
+            Console.WriteLine("\tTransaction 5\n\tUser 3 Sends 32 Money to User 1");
+            Transaction t5 = new Transaction(32, User3.PublicKey
+                , User1.PublicKey);
+            User3.SpendMoney(32); User1.ReceiveMoney(32);
+            Thread.Sleep(780);
+
+            Console.WriteLine("\n\tTransaction 6\n\tUser 4 Sends 22 Money to User 2");
+            Transaction t6 = new Transaction(22, User4.PublicKey, User2.PublicKey);
+            User4.SpendMoney(22); User2.ReceiveMoney(22);
+            Thread.Sleep(780);
+
+            Console.WriteLine("\n\tTransaction 7\n\tUser 1 Sends 32 Money to User 2");
+            Transaction t7 = new Transaction(32, User1.PublicKey
+                , User2.PublicKey);
+            User1.SpendMoney(32); User2.ReceiveMoney(32);
+            Thread.Sleep(780);
+
+            Console.WriteLine("\n\tTransaction 8\n\tUser 4 Sends 4 Money to User 3");
+            Transaction t8 = new Transaction(4, User4.PublicKey, User3.PublicKey);
+            User4.SpendMoney(4); User2.ReceiveMoney(4);
+            Thread.Sleep(780);
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\n\t----------------- Adding Transactions to session list -----------------\n");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+            sessionTransactions.Add(t1);
+            sessionTransactions.Add(t2);
+            sessionTransactions.Add(t3);
+            sessionTransactions.Add(t4);
+            sessionTransactions.Add(t5);
+            sessionTransactions.Add(t6);
+            sessionTransactions.Add(t7);
+            sessionTransactions.Add(t8);
+
+            User1.AddTransaction(t1);
+            User1.AddTransaction(t2);
+            User1.AddTransaction(t3);
+            User1.AddTransaction(t4);
+            User1.AddTransaction(t5);
+            User1.AddTransaction(t6);
+            User1.AddTransaction(t7);
+            User1.AddTransaction(t8);
+
+            foreach (var item in sessionTransactions)
+            {
+                Console.WriteLine(item.ToString());
+            }
+        }
+        static void SignS5Transactions()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\n\t----------------- Adding Transactions to session list -----------------\n");
+            //Sign Transactions
+            Console.ForegroundColor = ConsoleColor.Blue;
+            int counter = 0;
+            foreach (var transaction in sessionTransactions)
+            {
+                var sig = User1.SignTransaction(transaction, User1.PrivateKey);
+                counter++;
+                Console.WriteLine("\tSigniture for transaction " + counter + ": " + sig);
+                Thread.Sleep(780);
+            }
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        static void CreateAndMineBlockForS5(int difficulty)
+        {
+            Console.WriteLine("\tBlock Created for current/Pending session Transactions");
+            Block blockToBeAdded = User1.CreateBlock();
+
+            User1.MineBlock(blockToBeAdded, difficulty);
+
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("\n\tInfo!\n\t-----");
+            bool ver = User1.VerifyMinedBlock(blockToBeAdded);
+            Console.WriteLine("\tBlock has not been verified. Only verified and added to the blockchain when quit option is selected");
+ 
+            User1.AddMinedBlock(blockToBeAdded);
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("\n\t---------------------------------- Session 5 End---------------------------------------------------\n");
+            Console.ForegroundColor = ConsoleColor.White;
+
+            sessionTransactions.Clear();
+
+
+        }
+        static void WriteDataToFile(Chain BlockChain)
+        {
+            Random rnd = new Random();
+            int fileNum = rnd.Next(100);
+
+            StreamWriter wr = new StreamWriter("Data_" + fileNum + ".txt");
+            foreach (var block in BlockChain.chain)
+            {
+      
+                wr.WriteLine(block.ToString());
+              
+                    foreach (var transaction in block.transactions)
+                    {
+                        wr.WriteLine(transaction.ToString());
+                    }
+            }
+            wr.Close();
+        }
 
         //Display
         static void DisplayBlockChainContents(Chain BlockChain)
         {
+
             Console.Clear();
-            Console.WriteLine("-----------------Blockchain: Proof of Work Implementation -----------------");
+            Console.WriteLine("\n\t-----------------Blockchain: Proof of Work Implementation -----------------");
 
             Console.WriteLine("\n\t--------------------- Start Blockchain -----------------");
             foreach (var block in BlockChain.chain)
             {
                 Console.WriteLine("\t-------------- Start Block -------------------------");
+                
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(block.ToString());
                 Console.ForegroundColor = ConsoleColor.White;
@@ -680,6 +945,7 @@ namespace PoW
                     foreach (var transaction in block.transactions)
                     {
                             Console.WriteLine(transaction.ToString());
+                           
                     }
                 }
                 Console.ForegroundColor = ConsoleColor.White;
@@ -690,6 +956,7 @@ namespace PoW
 
             }
             Console.WriteLine("\n\t----------------- End Blockchain -----------------------------\n");
+           
 
         }
     
