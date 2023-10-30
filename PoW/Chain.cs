@@ -31,7 +31,7 @@ namespace PoW
             
             List<Transaction> GenesisTransactions = new List<Transaction>();
             Block Genesis = new Block("0",GenesisTransactions);
-            
+            Genesis.Index = "0 Seconds, 432 Milliseconds!!!";
             chain.Add(Genesis);
         }
 

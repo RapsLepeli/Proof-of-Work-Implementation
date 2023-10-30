@@ -9,7 +9,7 @@ namespace PoW
 {
     public class Block
     {
-        public int Index { get; set; }
+        public string Index { get; set; }
         public string Hash { get; set; }
         public string PrevHash { get; set; }
         public string TimeStamp { get; private set; }
@@ -22,6 +22,7 @@ namespace PoW
             this.PrevHash = prevBlockHash;
             TimeStamp = DateTime.UtcNow.ToString();
             Hash = CalculateBlockHash();
+            Index = "";
 
         }
         public string CalculateBlockHash()
@@ -40,7 +41,7 @@ namespace PoW
         }
         public override string ToString()
         {
-            return "\tHash: " + Hash + "\n\tPrev Hash: " + PrevHash + "\n\tTimeStamp: "+TimeStamp+"\n\tMining Time: " + Index + " Seconds.";
+            return "\tHash: " + Hash + "\n\tPrev Hash: " + PrevHash + "\n\tTimeStamp: "+TimeStamp+"\n\tMining Time: " + Index;
         }
     }
 }

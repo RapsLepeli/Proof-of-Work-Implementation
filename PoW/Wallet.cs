@@ -113,8 +113,12 @@ namespace PoW
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\n\tBlock with hash= "+ blockToBeMined.Hash + " successfully mined!!!");
-            Console.WriteLine("\n\tTime Elapsed to mine block: " + (stopWatch.ElapsedMilliseconds)/ 1000 + " seconds!!!");
-            blockToBeMined.Index = (int)(stopWatch.ElapsedMilliseconds) / 1000;
+            int Seconds = (int)stopWatch.ElapsedMilliseconds/1000;
+            int Milliseconds = (int)stopWatch.ElapsedMilliseconds % 1000;
+            string text = Seconds + " Seconds " + "," + Milliseconds + " Milliseconds!!!";
+            Console.WriteLine("\n\tTime Elapsed to mine block: " + text);
+            Console.WriteLine("\n\tNumber of Tries: " + nonce + " tries!!!");
+            blockToBeMined.Index = text;
             Console.ForegroundColor = ConsoleColor.White;
      
         }

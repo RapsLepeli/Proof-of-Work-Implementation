@@ -149,6 +149,7 @@ namespace PoW
                         "\n\tsession 3: to start session 3" +
                         "\n\tsession 4/5: to start session 4/5" +
                         "\n\tdisplay: to display blockchain contents" +
+                        "\n\tstats: to display mining stats" +
                         "\n\tsave: to save blockchain data to file" +
                         "\n\tquit: to quit the app");
 
@@ -215,6 +216,9 @@ namespace PoW
                     else if (receivedMessage == "display")
                     {
                         DisplayBlockChainContents(BlockChain);
+                    }else if(receivedMessage == "stats")
+                    {
+                        DisplayStats(BlockChain);
                     }
                     else if (receivedMessage == "session 2")
                     {
@@ -342,47 +346,6 @@ namespace PoW
                 Console.WriteLine(e.Message);
             }
         }
-        static void MenuForSessions()
-        {
-            Console.Write("\n\tNew Session Started");
-            //Block1TestData();
-
-
-            Console.Write("\n\tStart New Session(Y/N):>");
-            char Opt = char.Parse(Console.ReadLine().ToUpper());
-            if (Opt == 'Y')
-            {
-
-                Console.Write("\n\tDisplay BlockChain Contents(Y/N):>");
-                Opt = char.Parse(Console.ReadLine().ToUpper());
-                if (Opt == 'Y')
-                {
-                    //Display
-                    DisplayBlockChainContents(BlockChain);
-                }
-            }
-            else if (Opt == 'N')
-            {
-                Console.Write("\n\tDisplay BlockChain Contents(Y/N):>");
-                Opt = char.Parse(Console.ReadLine().ToUpper());
-                if (Opt == 'Y')
-                {
-                    //Display
-                    DisplayBlockChainContents(BlockChain);
-                }
-            }
-            else
-            {
-                Console.WriteLine("\tInvalid Input...");
-                Console.Write("\n\tDisplay BlockChain Contents(Y/N):>");
-                Opt = char.Parse(Console.ReadLine().ToUpper());
-                if (Opt == 'Y')
-                {
-                    //Display
-                    DisplayBlockChainContents(BlockChain);
-                }
-            }
-        }
 
         // Function for Creating Transaction
         // Calculating the hash for block(mining)
@@ -397,24 +360,24 @@ namespace PoW
             Console.WriteLine("\n\t----------------- Transactions for Session 1-----------------\n");
 
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("\tTransaction 1\n\tUser 3 Sends 32 Money to User 1");
+            Console.WriteLine("\tTransaction 1\n\tUser 3 Sends 32 Crypto Coins to User 1");
             Transaction t1 = new Transaction(32, User3.PublicKey
                 , User1.PublicKey);
             User3.SpendMoney(32); User1.ReceiveMoney(32);
             Thread.Sleep(781);
 
-            Console.WriteLine("\n\tTransaction 2\n\tUser 4 Sends 22 Money to User 2");
+            Console.WriteLine("\n\tTransaction 2\n\tUser 4 Sends 22 Crypto Coins to User 2");
             Transaction t2 = new Transaction(22, User4.PublicKey, User2.PublicKey);
             User4.SpendMoney(22); User2.ReceiveMoney(22);
             Thread.Sleep(370);
 
-            Console.WriteLine("\n\tTransaction 3\n\tUser 1 Sends 32 Money to User 2");
+            Console.WriteLine("\n\tTransaction 3\n\tUser 1 Sends 32 Crypto Coins to User 2");
             Transaction t3 = new Transaction(32, User1.PublicKey
                 , User2.PublicKey);
             User1.SpendMoney(32); User2.ReceiveMoney(32);
             Thread.Sleep(580);
 
-            Console.WriteLine("\n\tTransaction 4\n\tUser 4 Sends 4 Money to User 3");
+            Console.WriteLine("\n\tTransaction 4\n\tUser 4 Sends 4 Crypto Coins to User 3");
             Transaction t4 = new Transaction(4, User4.PublicKey, User3.PublicKey);
             User4.SpendMoney(4); User2.ReceiveMoney(4);
             Thread.Sleep(800);
@@ -488,46 +451,46 @@ namespace PoW
             Console.WriteLine("\n\t----------------- Transactions for Session 2-----------------\n");
 
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("\tTransaction 1\n\tUser 3 Sends 32 Money to User 1");
+            Console.WriteLine("\tTransaction 1\n\tUser 3 Sends 32 Crypto Coins to User 1");
             Transaction t1 = new Transaction(32, User3.PublicKey
                 , User1.PublicKey);
             User3.SpendMoney(32); User1.ReceiveMoney(32);
             Thread.Sleep(780);
 
-            Console.WriteLine("\n\tTransaction 2\n\tUser 4 Sends 22 Money to User 2");
+            Console.WriteLine("\n\tTransaction 2\n\tUser 4 Sends 22 Crypto Coins to User 2");
             Transaction t2 = new Transaction(22, User4.PublicKey, User2.PublicKey);
             User4.SpendMoney(22); User2.ReceiveMoney(22);
             Thread.Sleep(559);
 
-            Console.WriteLine("\n\tTransaction 3\n\tUser 1 Sends 32 Money to User 2");
+            Console.WriteLine("\n\tTransaction 3\n\tUser 1 Sends 32 Crypto Coins to User 2");
             Transaction t3 = new Transaction(32, User1.PublicKey
                 , User2.PublicKey);
             User1.SpendMoney(32); User2.ReceiveMoney(32);
             Thread.Sleep(780);
 
-            Console.WriteLine("\n\tTransaction 4\n\tUser 4 Sends 4 Money to User 3");
+            Console.WriteLine("\n\tTransaction 4\n\tUser 4 Sends 4 Crypto Coins to User 3");
             Transaction t4 = new Transaction(4, User4.PublicKey, User3.PublicKey);
             User4.SpendMoney(4); User2.ReceiveMoney(4);
             Thread.Sleep(234);
 
-            Console.WriteLine("\tTransaction 5\n\tUser 3 Sends 32 Money to User 1");
+            Console.WriteLine("\tTransaction 5\n\tUser 3 Sends 32 Crypto Coins to User 1");
             Transaction t5 = new Transaction(32, User3.PublicKey
                 , User1.PublicKey);
             User3.SpendMoney(32); User1.ReceiveMoney(32);
             Thread.Sleep(780);
 
-            Console.WriteLine("\n\tTransaction 6\n\tUser 4 Sends 22 Money to User 2");
+            Console.WriteLine("\n\tTransaction 6\n\tUser 4 Sends 22 Crypto Coins to User 2");
             Transaction t6 = new Transaction(22, User4.PublicKey, User2.PublicKey);
             User4.SpendMoney(22); User2.ReceiveMoney(22);
             Thread.Sleep(780);
 
-            Console.WriteLine("\n\tTransaction 7\n\tUser 1 Sends 32 Money to User 2");
+            Console.WriteLine("\n\tTransaction 7\n\tUser 1 Sends 32 Crypto Coins to User 2");
             Transaction t7 = new Transaction(32, User1.PublicKey
                 , User2.PublicKey);
             User1.SpendMoney(32); User2.ReceiveMoney(32);
             Thread.Sleep(780);
 
-            Console.WriteLine("\n\tTransaction 8\n\tUser 4 Sends 4 Money to User 3");
+            Console.WriteLine("\n\tTransaction 8\n\tUser 4 Sends 4 Crypto Coins to User 3");
             Transaction t8 = new Transaction(4, User4.PublicKey, User3.PublicKey);
             User4.SpendMoney(4); User2.ReceiveMoney(4);
             Thread.Sleep(780);
@@ -608,24 +571,24 @@ namespace PoW
             Console.WriteLine("\n\t----------------- Transactions for Session 3-----------------\n");
 
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("\tTransaction 1\n\tUser 1 Sends 43 Money to User 2");
+            Console.WriteLine("\tTransaction 1\n\tUser 1 Sends 43 Crypto Coins to User 2");
             Transaction t1 = new Transaction(32, User1.PublicKey
                 , User2.PublicKey);
             User3.SpendMoney(43); User1.ReceiveMoney(43);
             Thread.Sleep(781);
 
-            Console.WriteLine("\n\tTransaction 2\n\tUser 2 Sends 2 Money to User 1");
+            Console.WriteLine("\n\tTransaction 2\n\tUser 2 Sends 2 Crypto Coins to User 1");
             Transaction t2 = new Transaction(22, User4.PublicKey, User2.PublicKey);
             User2.SpendMoney(2); User1.ReceiveMoney(2);
             Thread.Sleep(370);
 
-            Console.WriteLine("\n\tTransaction 3\n\tUser 4 Sends 245 Money to User 2");
+            Console.WriteLine("\n\tTransaction 3\n\tUser 4 Sends 245 Crypto Coins to User 2");
             Transaction t3 = new Transaction(32, User1.PublicKey
                 , User2.PublicKey);
             User1.SpendMoney(245); User2.ReceiveMoney(245);
             Thread.Sleep(580);
 
-            Console.WriteLine("\n\tTransaction 4\n\tUser 3 Sends 14 Money to User 4");
+            Console.WriteLine("\n\tTransaction 4\n\tUser 3 Sends 14 Crypto Coins to User 4");
             Transaction t4 = new Transaction(4, User4.PublicKey, User3.PublicKey);
             User4.SpendMoney(14); User2.ReceiveMoney(14);
             Thread.Sleep(800);
@@ -698,24 +661,24 @@ namespace PoW
             Console.WriteLine("\n\t----------------- Transactions for Session 4-----------------\n");
 
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("\tTransaction 1\n\tUser 1 Sends 43 Money to User 2");
+            Console.WriteLine("\tTransaction 1\n\tUser 1 Sends 43 Crypto Coins to User 2");
             Transaction t1 = new Transaction(32, User1.PublicKey
                 , User2.PublicKey);
             User3.SpendMoney(43); User1.ReceiveMoney(43);
             Thread.Sleep(781);
 
-            Console.WriteLine("\n\tTransaction 2\n\tUser 2 Sends 2 Money to User 1");
+            Console.WriteLine("\n\tTransaction 2\n\tUser 2 Sends 2 Crypto Coins to User 1");
             Transaction t2 = new Transaction(22, User4.PublicKey, User2.PublicKey);
             User2.SpendMoney(2); User1.ReceiveMoney(2);
             Thread.Sleep(370);
 
-            Console.WriteLine("\n\tTransaction 3\n\tUser 4 Sends 245 Money to User 2");
+            Console.WriteLine("\n\tTransaction 3\n\tUser 4 Sends 245 Crypto Coins to User 2");
             Transaction t3 = new Transaction(32, User1.PublicKey
                 , User2.PublicKey);
             User1.SpendMoney(245); User2.ReceiveMoney(245);
             Thread.Sleep(580);
 
-            Console.WriteLine("\n\tTransaction 4\n\tUser 3 Sends 14 Money to User 4");
+            Console.WriteLine("\n\tTransaction 4\n\tUser 3 Sends 14 Crypto Coins to User 4");
             Transaction t4 = new Transaction(4, User4.PublicKey, User3.PublicKey);
             User4.SpendMoney(14); User2.ReceiveMoney(14);
             Thread.Sleep(800);
@@ -788,46 +751,46 @@ namespace PoW
             Console.WriteLine("\n\t----------------- Transactions for Session 5-----------------\n");
 
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("\tTransaction 1\n\tUser 3 Sends 32 Money to User 1");
+            Console.WriteLine("\tTransaction 1\n\tUser 3 Sends 32 Crypto Coins to User 1");
             Transaction t1 = new Transaction(32, User3.PublicKey
                 , User1.PublicKey);
             User3.SpendMoney(32); User1.ReceiveMoney(32);
             Thread.Sleep(780);
 
-            Console.WriteLine("\n\tTransaction 2\n\tUser 4 Sends 22 Money to User 2");
+            Console.WriteLine("\n\tTransaction 2\n\tUser 4 Sends 22 Crypto Coins to User 2");
             Transaction t2 = new Transaction(22, User4.PublicKey, User2.PublicKey);
             User4.SpendMoney(22); User2.ReceiveMoney(22);
             Thread.Sleep(780);
 
-            Console.WriteLine("\n\tTransaction 3\n\tUser 1 Sends 32 Money to User 2");
+            Console.WriteLine("\n\tTransaction 3\n\tUser 1 Sends 32 Crypto Coins to User 2");
             Transaction t3 = new Transaction(32, User1.PublicKey
                 , User2.PublicKey);
             User1.SpendMoney(32); User2.ReceiveMoney(32);
             Thread.Sleep(780);
 
-            Console.WriteLine("\n\tTransaction 4\n\tUser 4 Sends 4 Money to User 3");
+            Console.WriteLine("\n\tTransaction 4\n\tUser 4 Sends 4 Crypto Coins to User 3");
             Transaction t4 = new Transaction(4, User4.PublicKey, User3.PublicKey);
             User4.SpendMoney(4); User2.ReceiveMoney(4);
             Thread.Sleep(780);
 
-            Console.WriteLine("\tTransaction 5\n\tUser 3 Sends 32 Money to User 1");
+            Console.WriteLine("\tTransaction 5\n\tUser 3 Sends 32 Crypto Coins to User 1");
             Transaction t5 = new Transaction(32, User3.PublicKey
                 , User1.PublicKey);
             User3.SpendMoney(32); User1.ReceiveMoney(32);
             Thread.Sleep(780);
 
-            Console.WriteLine("\n\tTransaction 6\n\tUser 4 Sends 22 Money to User 2");
+            Console.WriteLine("\n\tTransaction 6\n\tUser 4 Sends 22 Crypto Coins to User 2");
             Transaction t6 = new Transaction(22, User4.PublicKey, User2.PublicKey);
             User4.SpendMoney(22); User2.ReceiveMoney(22);
             Thread.Sleep(780);
 
-            Console.WriteLine("\n\tTransaction 7\n\tUser 1 Sends 32 Money to User 2");
+            Console.WriteLine("\n\tTransaction 7\n\tUser 1 Sends 32 Crypto Coins to User 2");
             Transaction t7 = new Transaction(32, User1.PublicKey
                 , User2.PublicKey);
             User1.SpendMoney(32); User2.ReceiveMoney(32);
             Thread.Sleep(780);
 
-            Console.WriteLine("\n\tTransaction 8\n\tUser 4 Sends 4 Money to User 3");
+            Console.WriteLine("\n\tTransaction 8\n\tUser 4 Sends 4 Crypto Coins to User 3");
             Transaction t8 = new Transaction(4, User4.PublicKey, User3.PublicKey);
             User4.SpendMoney(4); User2.ReceiveMoney(4);
             Thread.Sleep(780);
@@ -918,12 +881,32 @@ namespace PoW
             wr.Close();
         }
 
+        static void DisplayStats(Chain BlockChain)
+        {
+
+            Console.Clear();
+            Console.WriteLine("\n\t-----------------Blockchain: Proof of Work Implementation -----------------");
+
+            Console.WriteLine("\n\t--------------------- Statistics -----------------");
+            int BlockNum = 1;
+
+            foreach (var item in BlockChain.chain)
+            {
+                Console.WriteLine("\t--------- Block Number: "+ BlockNum + " -------------");
+
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("\t" + item.Index);
+                Console.ForegroundColor = ConsoleColor.White;
+                BlockNum++;
+            }
+
+        }
         //Display
         static void DisplayBlockChainContents(Chain BlockChain)
         {
 
             Console.Clear();
-            Console.WriteLine("\n\t-----------------Blockchain: Proof of Work Implementation -----------------");
+            Console.WriteLine("\n\t----------------- Blockchain: Proof of Work Implementation -----------------");
 
             Console.WriteLine("\n\t--------------------- Start Blockchain -----------------");
             foreach (var block in BlockChain.chain)
