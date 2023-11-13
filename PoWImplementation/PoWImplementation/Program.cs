@@ -9,15 +9,15 @@ namespace PoWImplementation
 {
     internal class Program
     {
-        static List<Block> blockChain;
+        static Chain blockChain = Chain.Instance;
+
         static void Main(string[] args)
         {
-            
-           // CreateChain();
-
-           // Console.WriteLine(isChainValid());
+           // Wallet wallet = new Wallet();
+           // Console.Write("Pub: " + wallet.PublicKey + "\nPriv: " + wallet.PrivateKey);
 
 
+            CreateChain();
 
             Console.Write("\nPress any key to exit...");
             Console.ReadKey();
@@ -25,88 +25,108 @@ namespace PoWImplementation
 
         public static void CreateChain()
         {
-            blockChain = new List<Block>();
 
-            blockChain.Add(new Block("Genesis Block", "0"));
-            blockChain.Add(new Block("Second Block", blockChain[blockChain.Count - 1].hash));
-            blockChain.Add(new Block("Third Block", blockChain[blockChain.Count - 1].hash));
-            blockChain.Add(new Block("Fourth Block", blockChain[blockChain.Count - 1].hash));
-            blockChain.Add(new Block("Fifth Block", blockChain[blockChain.Count - 1].hash));
+            string MinerAddress = "Miner 1";
 
+            string user1 = "Raps";
+            string user2 = "Joe";
+            int amount = 10;
+
+            Transaction transaction1 = new Transaction(amount, user1, user2);
+            blockChain.CreateTransaction(transaction1);
+            Console.WriteLine("Transaction 1: " + user1 + " sends " + amount + " amount to "+ user2);
+
+            amount = 200;
+            Transaction transaction2 = new Transaction(amount, user2, user1);
+            blockChain.CreateTransaction(transaction2);
+
+            Console.WriteLine("Transaction 2: " + user2 + " sends " + amount + " amount to " + user1);
+
+            amount = 10;
+            Transaction transaction3 = new Transaction(10, user2, user1);
+            blockChain.CreateTransaction(transaction3);
+            Console.WriteLine("Transaction 3: " + user2 + " sends " + amount + " amount to " + user1);
+
+
+            //Console.WriteLine("is the chain valid: " + blockChain.IsChainValid());
+
+            //
+            int difficulty = 1;
+
+            Console.Write("\nEnter the difficulty for mining a block containig the above 3 transactions: ");
+            difficulty = int.Parse(Console.ReadLine());
+
+
+            Console.WriteLine();
+            Console.WriteLine("----------------- Start mining first[not genesis] block(with 3 transactions)-----------------");
+
+            blockChain.MineBlock(difficulty, MinerAddress);
+
+            Console.WriteLine("Balance of the miner: " + blockChain.GetBalance(MinerAddress));
+
+            amount = 5;
+            Transaction transaction4 = new Transaction(amount, user1, user2);
+            blockChain.CreateTransaction(transaction4);
+
+            Console.Write("\nEnter the difficulty for mining a block containig the above 1 transaction: ");
+            difficulty = int.Parse(Console.ReadLine());
+
+
+            Console.WriteLine();
+            Console.WriteLine("--------- Start mining block(with 1 transaction) ---------");
+            blockChain.MineBlock(difficulty, MinerAddress);
+
+            Console.WriteLine("Balance of the miner: " + blockChain.GetBalance(MinerAddress));
+            Console.WriteLine();
+           
+            blockChain.PrintChain();
         }
-        public static bool isChainValid()
-        {
-            Block currentBlock;
-            Block prevBlock;
 
-            for (int i = 1; i < blockChain.Count; i++)
-            {
-                currentBlock = blockChain[i];
-                prevBlock = blockChain[i-1];
+        //public static void doesBlockExist()
+        //{
+        //    Console.Write("Input hash to check: ");
+        //    string blockhash = Console.ReadLine();
 
-                if (!currentBlock.hash.Equals(currentBlock.calculateHash()))
-                {
-                    Console.WriteLine("Hashes are not equal");
-                    return false;
-                }
+        //    Block currentBlock = blockChain.FirstOrDefault(b => b.hash == blockhash);
 
-                if (!prevBlock.hash.Equals(currentBlock.prevHash))
-                {
-                    Console.WriteLine("Previous block hashes are not equal");
-                    return false;
-                }
+        //    if (currentBlock != null)
+        //    {
+        //        Console.WriteLine("Block Exists....");
 
-            }
-            return true;
-        }
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("Block Does not exist");
+        //    }
+
+
+        //}
+
+        //public static bool isChainValid()
+        //{
+        //    Block currentBlock;
+        //    Block prevBlock;
+
+        //    for (int i = 1; i < blockChain.Count; i++)
+        //    {
+        //        currentBlock = blockChain[i];
+        //        prevBlock = blockChain[i-1];
+
+        //        if (!currentBlock.hash.Equals(currentBlock.calculateHash()))
+        //        {
+        //            Console.WriteLine("Hashes are not equal");
+        //            return false;
+        //        }
+
+        //        if (!prevBlock.hash.Equals(currentBlock.prevHash))
+        //        {
+        //            Console.WriteLine("Previous block hashes are not equal");
+        //            return false;
+        //        }
+
+        //    }
+        //    return true;
+        //}
     }
 
-    public class Block
-    {
-        public string hash { get; set; }
-        public string prevHash { get; set; }
-        
-        private string sdata;
-        public string data
-        {
-            get
-            {
-                return sdata;
-            }
-            set
-            {
-                sdata = value;
-            }
-        }
-        private string timeStamp;
-
-        /// 
-        private int nonce;
-        /// 
-  
-
-        public Block(string data, string prevHash) 
-        {
-            this.data= data;
-            this.prevHash = prevHash;
-            timeStamp = DateTime.UtcNow.TimeOfDay.ToString();
-            this.hash = calculateHash();
-          
-        }
-        public string calculateHash()
-        {
-            using (SHA256 sha256Hash = SHA256.Create())
-            {
-                string sHash = "";
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(prevHash + timeStamp));// add nonce after test
-
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    sHash += bytes[i].ToString("x2");
-                }
-                return sHash;
-            }
-
-        }
-    }
 }
