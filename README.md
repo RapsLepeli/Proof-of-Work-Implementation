@@ -2,9 +2,9 @@
 Honours Project - Implementation of the Proof of Work consensus algorithm.
 
 ## Objectives
-This documentaion is used to track the development of a fully functional blockchain system. This will act as a guide and notes for the developer. This documentation might be used as a template for both the user manual and the technical manual. This documentation will be written in Markdown: Here's a link for the basic syntax [Markdown syntax](https://www.markdownguide.org/basic-syntax/).<br>
+This documentation is used to track the development of a fully functional blockchain system. This will act as a guide and notes for the developer. This documentation might be used as a template for both the user manual and the technical manual. This documentation will be written in Markdown: Here's a link for the basic syntax [Markdown syntax](https://www.markdownguide.org/basic-syntax/).<br>
 # Getting started
-Visual Studio 2017 or 2019 can be used. At this point the application is untested on other development enriroments and fucses on windows systems. Below are the recomended system requiements.
+Visual Studio 2017 or 2019 can be used. At this point, the application is untested on other development environments and focuses on windows systems. Below are the recommended system requirements.
 
 - Windows 10 operating system
 - Intel core I5 7th gen / AMD 2nd and 3rd Gen CPU’s
@@ -13,7 +13,7 @@ Visual Studio 2017 or 2019 can be used. At this point the application is unteste
 - Access to the internet 
 
 1. <u>Downloading the repository:</u><br> 
-To clone the repository,make sure git is installed and configures and  in command prompt,  `git clone --recursive https://github.com/RapsLepeli/Proof-of-Work-Implementation.git`
+To clone the repository, make sure git is installed and configured and  in the command prompt,  `git clone --recursive https://github.com/RapsLepeli/Proof-of-Work-Implementation.git`
 
 2. <u>Confugiring the dependencies</u><br>
 open the solution file in Visual Studio. The minimum .Net SDK should be `v4.7.2`
@@ -26,7 +26,7 @@ Chapter 1: Introduction discusses the general overview of the developed system.
 
 ### 1.1 Introduction
 
-This project centres around creating a blockchain system with a Proof-of-Work (PoW) consensus
+This project centers around creating a blockchain system with a Proof-of-Work (PoW) consensus
 algorithm designed primarily for research and testing purposes. The system comprises several
 key components: a distributed blockchain data structure that securely records transactions, a
 Peer-to-Peer network to simulate participant interactions, the PoW consensus algorithm to
@@ -46,19 +46,19 @@ implementation and transaction handling. While the project's minimal user interf
 targets users who already comprehend Blockchain's purpose, it ensures efficient handling of
 transactions, block creation, hash generation, and verification. With its adaptable nature, the
 system can run on various machines, though it is optimized for the Windows 10 operating system.
-This project's value lies in its potential as critical research and learning tool for blockchain
+This project's value lies in its potential as a critical research and learning tool for blockchain
 enthusiasts and developers.
 
 ### 1.2 Summary
 
 Chapter 1: Introduction discusses the general overview of the developed system. Chapter 2:
-Installation procedure discuss the installation process of the application.
+The installation procedure discusses the installation process of the application.
 
 
 ### Chapter 2: Installation Procedure
 
 Chapter 1: Introduction discussed the general overview of the developed system. Chapter 2:
-Installation procedure discusses the installation process of the application.
+The installation procedure discusses the installation process of the application.
 
 ### 2.1 Introduction
 
@@ -75,6 +75,8 @@ searching system information on Windows search, and the following window should 
 displayed with the version of Windows currently running on the machine. This is highlighted in
 yellow in Figure 2-1:
 
+![image](https://github.com/RapsLepeli/Proof-of-Work-Implementation/assets/50484534/585e9dd4-cf31-4dde-a941-2af267ed3a60)
+
 ```
 Figure 2-1: Windows Version
 ```
@@ -83,34 +85,49 @@ gen or AMD 2nd and 3rd Gen CPU, 8 GB DDR4 RAM, 120 GB SSD, and internet access. 
 details can be found on the same window from searching system information. This is displayed
 in Figure 2-2, highlighted in Yellow.
 
+![image](https://github.com/RapsLepeli/Proof-of-Work-Implementation/assets/50484534/183d07d1-5dce-4e29-a4db-802101ded855)
 
-### FIGURE 2-2: CPU AND RAM
+```
+FIGURE 2-2: CPU AND RAM
+```
 
 Go to File Explorer and select this PC for physical storage, and Figure 2-3 should be displayed.
 This may differ depending on the number of hard drives inside the system:
 
-### FIGURE 2-3: STORAGE
+![image](https://github.com/RapsLepeli/Proof-of-Work-Implementation/assets/50484534/b3e3a680-f401-4f62-8505-fe17ad525e87)
+
+```
+FIGURE 2-3: STORAGE
+```
 
 3. Download the system developed using the .NET Core framework from the designated source.
 In this case, the system can be distributed via a USB flash drive or downloaded from git-hub.
 
-```
- USB Flash Drive: As the system is distributed along with its source code, the folder
-structure should look as in Figure 2-4:
-```
+   USB Flash Drive: As the system is distributed along with its source code, the folder
+  structure should look as in Figure 2-4:
 
-### FIGURE 2-4: FOLDER STRUCTURE
+![image](https://github.com/RapsLepeli/Proof-of-Work-Implementation/assets/50484534/b2ac12ea-8ec6-4d3a-af9b-adef8d70f3c0)
 
+```
+FIGURE 2-4: FOLDER STRUCTURE
+```
  GitHub(Power Users): follow the link Proof-of-Work-Implementation to the repository
 and clone the branch. The user can also follow the installation instructions on the
 repository's READ.ME file.
 
+![image](https://github.com/RapsLepeli/Proof-of-Work-Implementation/assets/50484534/5b5c2d01-b75d-4240-95a1-7bfa6c259f04)
 
-### FIGURE 2-5: GITHUB REPOSITORY
+```
+FIGURE 2-5: GITHUB REPOSITORY
+```
 
 The instructions to clone are shown in Figure 2-6:
 
-### FIGURE 2-6: READ.ME
+![image](https://github.com/RapsLepeli/Proof-of-Work-Implementation/assets/50484534/d78a1287-d02f-47a6-8bad-efcbdc0655c4)
+
+```
+FIGURE 2-6: READ.ME
+```
 
 After the cloning process, the folder structure should look the same as in Figure 2-
 
@@ -140,25 +157,38 @@ steps should be followed to run the system successfully.
 ```
  Navigate to folder bin > Debug; Figure 3-1 should be displayed.
 ```
-### FIGURE 3-1: DEBUG FOLDER
+![image](https://github.com/RapsLepeli/Proof-of-Work-Implementation/assets/50484534/44daacd1-6803-4e72-a4f8-dfe68e0283da)
 
 ```
- Double-click on the PoW.exe file and spawn any number of user interfaces, which should
-be put side by side. The recommended number is 3. An example is shown in Figure 3-
+FIGURE 3-1: DEBUG FOLDER
 ```
 
-### FIGURE 3-2: LAUNCHED APPLICATION
+```
+  Double-click on the PoW.exe file and spawn any number of user interfaces, which should
+ be put side by side. The recommended number is 3. An example is shown in Figure 3-
+```
+
+![image](https://github.com/RapsLepeli/Proof-of-Work-Implementation/assets/50484534/6404f701-8e0e-4820-9bfd-1f9f58ed8c2a)
+
+```
+FIGURE 3-2: LAUNCHED APPLICATION
+```
 
  One of the windows will act as a controller, while the other is a client or wallet.
 For the one that will act as a controller, choose option one and press enter on that window.
 Then, choose option two for the rest of the windows and press enter. Figure 3-3 and
 Figure 3-4 display an example of this:
 
-### FIGURE 3-3: THE CONTROLLER IS CHOSEN.
+![image](https://github.com/RapsLepeli/Proof-of-Work-Implementation/assets/50484534/c102daba-816d-465f-b142-ffa1f11b9a4a)
 
+```
+FIGURE 3-3: THE CONTROLLER IS CHOSEN.
+```
+![image](https://github.com/RapsLepeli/Proof-of-Work-Implementation/assets/50484534/d5730d6f-ad2f-4e51-892c-6f9764aa1f8d)
 
-### FIGURE 3-4: CLIENTS SELECTED
-
+```
+FIGURE 3-4: CLIENTS SELECTED
+```
 
 ## Chapter 4: Create Blockchain
 
@@ -170,8 +200,11 @@ instance is returned to the client, ready for their usage and further interactio
 Blockchain. This happens the first time when the control application is launched, as shown in
 Figure 4-
 
-### FIGURE 4-1: BLOCKCHAIN CREATION
+![image](https://github.com/RapsLepeli/Proof-of-Work-Implementation/assets/50484534/d7524485-ea59-43cf-b589-b707a00b4671)
 
+```
+FIGURE 4-1: BLOCKCHAIN CREATION
+```
 
 ## Chapter 5: Create wallet.
 
@@ -181,8 +214,11 @@ instance includes two crucial components: public and private keys. However, it i
 note that only the public key is accessible to the client, while the private key remains hidden and
 confidential. This is shown in Figure 5-
 
-### FIGURE 5-1: CREATE A WALLET.
+![image](https://github.com/RapsLepeli/Proof-of-Work-Implementation/assets/50484534/81905da1-9ef5-4e36-af7b-43a3e7a883d8)
 
+```
+FIGURE 5-1: CREATE A WALLET.
+```
 
 ## Chapter 6: Create Transaction
 
@@ -194,7 +230,11 @@ simulation of how the controller application carries out the Blockchain transact
 is achieved by typing create and pressing enter in the controller application. This is shown in
 Figure 6-
 
-### FIGURE 6-1: CREATE TRANSACTION.
+![image](https://github.com/RapsLepeli/Proof-of-Work-Implementation/assets/50484534/b17f221a-c44a-45c7-8ace-2063e381e095)
+
+```
+FIGURE 6-1: CREATE TRANSACTION.
+```
 
 This will auto-generate transactions instead of entering the transactions one by one and manually.
 
@@ -209,10 +249,13 @@ this is a simulation of how the Blockchain works, transaction signing is carried
 controller application: this is achieved by typing sign and pressing enter in the controller
 application. This is shown in Figure 7-1:
 
-### FIGURE 7-1: TRANSACTION SIGNING
+![image](https://github.com/RapsLepeli/Proof-of-Work-Implementation/assets/50484534/078530e0-44a1-4241-a5fe-23afd32370d8)
+
+```
+FIGURE 7-1: TRANSACTION SIGNING
+```
 
 This will automatically sign all transactions generated in the create transaction functionality.
-
 
 ## Chapter 8: Mining Process
 
@@ -304,8 +347,11 @@ denotes the difficulty [1-5] where 1 is the easiest difficulty, and 5 is the hig
 by the system. The difficulty is capped between 1- 5 as PoW uses a brute force hash generation
 method, which consumes a lot of system resources. This is shown in Figure 8-1:
 
-### FIGURE 8-1: MINING..............................................................................................................................................
+![image](https://github.com/RapsLepeli/Proof-of-Work-Implementation/assets/50484534/4a051763-242f-4327-894c-f889d2c80a76)
 
+```
+FIGURE 8-1: MINING
+```
 8.9 Send Blockchain Message
 
 In the blockchain network, when a member of the Peer-to-Peer network potentially solves the
@@ -382,7 +428,11 @@ Since this is a simulation of how the Blockchain works, displaying the Blockchai
 by the controller application: this is achieved by typing display and pressing enter. Figure 8-
 will be displayed.
 
-### FIGURE 8-2: DISPLAY BLOCKCHAIN
+![image](https://github.com/RapsLepeli/Proof-of-Work-Implementation/assets/50484534/7a432d1e-d4de-4f38-8a4f-5fe01a9590b6)
+
+```
+FIGURE 8-2: DISPLAY BLOCKCHAIN
+```
 
 2. The user interface may be minimal but provides essential functionalities.
 3. The system will simulate a permissionless blockchain network where the user can interact
@@ -403,7 +453,11 @@ the number of tries each block took to be mined and the time it took for each bl
 This functionality allows testers to measure the efficiency of the PoW algorithm and use it as a
 benchmark for the proposed Proof of Publicly Verifiable Randomness (PoPVR) algorithm.
 
-### FIGURE 8-3: MINING STATS
+![image](https://github.com/RapsLepeli/Proof-of-Work-Implementation/assets/50484534/bb6a327a-fa5f-460c-a0e8-812f30ed392e)
+
+```
+FIGURE 8-3: MINING STATS
+```
 
 8.16 Summary
 
