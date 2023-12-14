@@ -18,6 +18,8 @@ To clone the repository, make sure git is installed and configured and  in the c
 2. <u>Confugiring the dependencies</u><br>
 open the solution file in Visual Studio. The minimum .Net SDK should be `v4.7.2`
 
+# Wiki
+[Wiki](https://github.com/RapsLepeli/Proof-of-Work-Implementation/wiki)
 3. # User Guide: 
 
 ## Chapter 1: Introduction
