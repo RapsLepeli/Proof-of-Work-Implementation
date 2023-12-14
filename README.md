@@ -20,7 +20,8 @@ open the solution file in Visual Studio. The minimum .Net SDK should be `v4.7.2`
 
 # Wiki
 [Wiki](https://github.com/RapsLepeli/Proof-of-Work-Implementation/wiki) <br>
-3. # User Guide: 
+
+# User Guide: 
 
 ## Chapter 1: Introduction
 
